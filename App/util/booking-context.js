@@ -5,7 +5,7 @@ import { BOOKINGS } from "../data/dummy-data";
 export const BookingContext = createContext({
   bookings: [],
   setBooking: (services) => {},
-  updateService: () => {},
+  updateBooking: () => {},
 });
 
 const bookingsReducer = (state, action) => {

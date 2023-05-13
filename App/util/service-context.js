@@ -6,8 +6,8 @@ export const ServiceContext = createContext({
   services: [],
   addService: (serviceData) => {},
   setService: (services) => {},
-  updateService: () => {},
-  deleteService: () => {},
+  updateService: (id, serviceData) => {},
+  // deleteService: () => {},
 });
 
 const servicesReducer = (state, action) => {
@@ -30,8 +30,8 @@ const servicesReducer = (state, action) => {
       updatedServices[updatableServiceIndex] = updatedItem;
 
       return updatedServices;
-    case "DELETE":
-      return state.filter((service) => service.id !== action.payload);
+    // case "DELETE":
+    //   return state.filter((service) => service.id !== action.payload);
     default:
       return state;
   }
@@ -52,16 +52,16 @@ const ServicesContextProvider = ({ children }) => {
     dispatch({ type: "UPDATE", payload: { id: id, data: serviceData } });
   };
 
-  const deleteService = (id) => {
-    dispatch({ type: "DELETE", payload: id });
-  };
+  // const deleteService = (id) => {
+  //   dispatch({ type: "DELETE", payload: id });
+  // };
 
   const value = {
     services: servicesState,
     addService: addService,
     setService: setService,
     updateService: updateService,
-    deleteService: deleteService,
+    // deleteService: deleteService,
   };
 
   return (

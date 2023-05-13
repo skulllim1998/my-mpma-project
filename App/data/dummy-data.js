@@ -84,9 +84,9 @@ export const CATEGORIES = [
 
 export const BOOKINGS = [
   {
-    id: 1,
-    user_id: 1,
-    service_id: 1,
+    id: 64,
+    user_id: 64,
+    service_id: 64,
     address: "address1",
     price: "price1",
     date: "date1",
@@ -97,9 +97,9 @@ export const BOOKINGS = [
     updated_at: "updated1",
   },
   {
-    id: 2,
-    user_id: 2,
-    service_id: 2,
+    id: 74,
+    user_id: 74,
+    service_id: 74,
     address: "address2",
     price: "price2",
     date: "date2",
@@ -110,9 +110,9 @@ export const BOOKINGS = [
     updated_at: "updated2",
   },
   {
-    id: 3,
-    user_id: 3,
-    service_id: 3,
+    id: 94,
+    user_id: 94,
+    service_id: 94,
     address: "address3",
     price: "price3",
     date: "date3",

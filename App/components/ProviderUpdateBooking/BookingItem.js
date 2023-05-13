@@ -1,36 +1,79 @@
-import { View, Text, StyleSheet, Pressable, Image, Alert } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  Image,
+  Alert,
+  Modal,
+} from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useState, useContext } from "react";
+import DialogInput from "react-native-dialog-input";
 
 import { GlobalStyles } from "../../constants/Styles";
+import { BookingContext } from "../../util/booking-context";
 
-const BookingItem = ({ categoryData, date, session, address }) => {
+const BookingItem = ({
+  id,
+  categoryData,
+  date,
+  session,
+  address,
+  onUpdateBookingPrice,
+}) => {
+  const [visible, setVisible] = useState(false);
+  const [input, setInput] = useState("");
+
   return (
     <View style={styles.container}>
-      <View style={styles.rowContainer}>
-        <Image
-          style={styles.icon}
-          source={require("../../../assets/customer-service.png")}
-        />
-        <View>
-          <Text style={styles.paragraph}>{categoryData}</Text>
-          <Text style={styles.paragraph}>{date}</Text>
-          <Text style={styles.paragraph}>{session}</Text>
-          <Text style={styles.title}>{address}</Text>
+      <View>
+        <Text style={styles.paragraphTitle}>Category</Text>
+        <Text style={styles.paragraph}>{categoryData}</Text>
+        <View style={styles.rowContainer}>
+          <View>
+            <Text style={styles.paragraphTitle}>Date</Text>
+            <Text style={styles.paragraph}>{date}</Text>
+          </View>
+          <View>
+            <Text style={styles.paragraphTitle}>Timeslot</Text>
+            <Text style={styles.paragraph}>{session}</Text>
+          </View>
         </View>
+        <Text style={styles.paragraphTitle}>Address</Text>
+        <Text style={styles.paragraph}>{address}</Text>
       </View>
 
       <View style={styles.buttonContainer}>
         <Pressable style={styles.button}>
-          <Text style={styles.text} onPress={() => {}}>
-            Edit
+          <Text
+            style={styles.text}
+            onPress={() => {
+              setVisible(true);
+            }}
+          >
+            Accept
           </Text>
         </Pressable>
         <Pressable style={styles.button}>
           <Text style={styles.text} onPress={() => {}}>
-            Remove
+            Cancel
           </Text>
         </Pressable>
       </View>
+
+      <DialogInput
+        isDialogVisible={visible}
+        title={"Accept Booking"}
+        message={"Please set a booking price."}
+        hintInput={"Enter price"}
+        submitInput={(inputText) => {
+          setInput(inputText);
+          setVisible(false);
+          onUpdateBookingPrice(id, { id: id, price: inputText });
+        }}
+        closeDialog={() => setVisible(false)}
+      ></DialogInput>
     </View>
   );
 };
@@ -56,10 +99,14 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: GlobalStyles.textHeading,
   },
-  paragraph: {
-    margin: 20,
+  paragraphTitle: {
+    margin: 10,
     fontSize: GlobalStyles.textHeading,
     fontWeight: "bold",
+  },
+  paragraph: {
+    margin: 10,
+    fontSize: GlobalStyles.textHeading,
   },
   buttonContainer: {
     flexDirection: "row",
