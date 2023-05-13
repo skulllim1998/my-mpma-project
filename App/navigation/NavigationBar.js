@@ -19,6 +19,8 @@ import SignInScreen from "../screens/SignInScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import { AuthContext } from "../util/auth-context";
 import ProviderUpdateBookingScreen from "../screens/Provider/ProviderUpdateBookingScreen";
+import ProviderBookingsScreen from "../screens/Provider/ProviderBookingsScreen";
+import AcceptBooking from "../components/ProviderBookings/AcceptBooking";
 
 const BottomTabs = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -37,8 +39,8 @@ const ProviderScreens = () => {
         options={styles.servicesHeader}
       />
       <BottomTabs.Screen
-        name="ProviderUpdateBooking"
-        component={ProviderUpdateBookingScreen}
+        name="ProviderBookings"
+        component={ProviderBookingsScreen}
         options={styles.bookingsHeader}
       />
     </BottomTabs.Navigator>
@@ -65,6 +67,11 @@ const AuthenticatedStack = () => {
           const categoryItem = route.params.category;
           return { title: categoryItem.title };
         }}
+      />
+      <Stack.Screen
+        name="ProviderUpdateBooking"
+        component={ProviderUpdateBookingScreen}
+        options={styles.pendingBookingHeader}
       />
     </Stack.Navigator>
   );
@@ -167,10 +174,13 @@ const styles = StyleSheet.create({
     title: "Your Services",
   },
   bookingsHeader: {
-    title: "Bookings",
     tabBarLabel: "Bookings",
+    headerTitle: () => <AcceptBooking />,
     tabBarIcon: ({ color, size }) => (
       <FontAwesome5 name="book" size={26} color={GlobalStyles.colors.white} />
     ),
+  },
+  pendingBookingHeader: {
+    title: "Pending Bookings",
   },
 });

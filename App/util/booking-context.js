@@ -4,7 +4,11 @@ import { BOOKINGS } from "../data/dummy-data";
 
 export const BookingContext = createContext({
   bookings: [],
+  onGoingBookings: [],
+  completedBookings: [],
   setBooking: (services) => {},
+  setOnGoingBooking: (services) => {},
+  setCompletedBooking: (services) => {},
   updateBooking: () => {},
 });
 
@@ -29,9 +33,25 @@ const bookingsReducer = (state, action) => {
 
 const BookingsContextProvider = ({ children }) => {
   const [bookingsState, dispatch] = useReducer(bookingsReducer, BOOKINGS);
+  const [onGoingBookingsState, onGoingDispatch] = useReducer(
+    bookingsReducer,
+    BOOKINGS
+  );
+  const [completedBookingsState, completedDispatch] = useReducer(
+    bookingsReducer,
+    BOOKINGS
+  );
 
   const setBooking = (bookings) => {
     dispatch({ type: "SET", payload: bookings });
+  };
+
+  const setOnGoingBooking = (bookings) => {
+    onGoingDispatch({ type: "SET", payload: bookings });
+  };
+
+  const setCompletedBooking = (bookings) => {
+    completedDispatch({ type: "SET", payload: bookings });
   };
 
   const updateBooking = (id, bookingData) => {
@@ -40,7 +60,11 @@ const BookingsContextProvider = ({ children }) => {
 
   const value = {
     bookings: bookingsState,
+    onGoingBookings: onGoingBookingsState,
+    completedBookings: completedBookingsState,
     setBooking: setBooking,
+    setOnGoingBooking: setOnGoingBooking,
+    setCompletedBooking: setCompletedBooking,
     updateBooking: updateBooking,
   };
 

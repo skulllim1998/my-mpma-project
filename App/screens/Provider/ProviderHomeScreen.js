@@ -9,21 +9,26 @@ import { getServicesByAdmin } from "../../util/serviceHttp";
 import { AuthContext } from "../../util/auth-context";
 import { serviceItems } from "../../util/serviceHttp";
 import { ServiceContext } from "../../util/service-context";
+import { BookingContext } from "../../util/booking-context";
+import { getPendingBookings } from "../../util/bookingHttp";
 
 const ProviderHomeScreen = () => {
   const [appIsReady, setAppIsReady] = useState(false);
 
   const authCtx = useContext(AuthContext);
   const serviceCtx = useContext(ServiceContext);
+  const bookingCtx = useContext(BookingContext);
 
   useEffect(() => {
-    const fetchServices = async () => {
+    const fetchApis = async () => {
       await SplashScreen.preventAutoHideAsync();
       const services = await getServicesByAdmin(authCtx.token);
-      await serviceCtx.setService(services);
-      await setAppIsReady(true);
+      serviceCtx.setService(services);
+      const pendingBookings = await getPendingBookings(authCtx.token);
+      bookingCtx.setBooking(pendingBookings);
+      setAppIsReady(true);
     };
-    fetchServices();
+    fetchApis();
   }, []);
 
   const onLayoutRootView = useCallback(async () => {

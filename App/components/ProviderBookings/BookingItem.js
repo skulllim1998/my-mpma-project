@@ -1,18 +1,8 @@
-import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-  Image,
-  Alert,
-  Modal,
-} from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { useState, useContext } from "react";
+import { View, Text, StyleSheet, Pressable, Alert } from "react-native";
+import { useState } from "react";
 import DialogInput from "react-native-dialog-input";
 
 import { GlobalStyles } from "../../constants/Styles";
-import { BookingContext } from "../../util/booking-context";
 
 const BookingItem = ({
   id,
@@ -20,8 +10,8 @@ const BookingItem = ({
   date,
   session,
   address,
-  onUpdateBookingPrice,
-  onRejectBookingHandler,
+  // onUpdateBookingPrice,
+  // onRejectBookingHandler,
 }) => {
   const [visible, setVisible] = useState(false);
   const [input, setInput] = useState("");
@@ -67,17 +57,12 @@ const BookingItem = ({
 
       <View style={styles.buttonContainer}>
         <Pressable style={styles.button}>
-          <Text
-            style={styles.text}
-            onPress={() => {
-              setVisible(true);
-            }}
-          >
+          <Text style={styles.text} onPress={() => {}}>
             Accept
           </Text>
         </Pressable>
         <Pressable style={styles.button}>
-          <Text style={styles.text} onPress={displayAlert}>
+          <Text style={styles.text} onPress={() => {}}>
             Reject
           </Text>
         </Pressable>
