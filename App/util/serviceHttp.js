@@ -51,3 +51,35 @@ export const getServicesByAdmin = async (token) => {
     throw error;
   }
 };
+
+export const updateService = async (token, serviceData) => {
+  try {
+    const response = await axios.post(
+      URL + "update-service-provided",
+      serviceData,
+      {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const deleteService = async (token, id) => {
+  try {
+    const response = await axios.post(URL + "delete-service-provided", id, {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

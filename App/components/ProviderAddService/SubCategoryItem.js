@@ -10,18 +10,32 @@ const SubCategoryItem = ({
   onSetChecked,
   editedService,
   onSetEditedService,
+  updatedService,
+  onSetUpdatedService,
+  action,
 }) => {
   const setEditedService = () => {
     onSetChecked(item);
 
-    onSetEditedService(
-      new ServiceCreate(
-        editedService.name,
-        editedService.description,
-        editedService.price_range,
-        item
-      )
-    );
+    if (action === "ADD") {
+      onSetEditedService(
+        new ServiceCreate(
+          editedService.name,
+          editedService.description,
+          editedService.price_range,
+          item
+        )
+      );
+    } else if (action === "UPDATE") {
+      onSetUpdatedService(
+        new ServiceCreate(
+          updatedService.name,
+          updatedService.description,
+          updatedService.price_range,
+          item
+        )
+      );
+    }
   };
 
   return (

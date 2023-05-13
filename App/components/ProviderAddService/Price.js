@@ -4,34 +4,62 @@ import { GlobalStyles } from "../../constants/Styles";
 import ServiceCreate from "../../models/serviceCreate";
 import { useState } from "react";
 
-const Price = ({ editedService, onSetEditedService }) => {
+const Price = ({
+  editedService,
+  onSetEditedService,
+  updatedService,
+  onSetUpdatedService,
+  action,
+}) => {
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
 
   const minPriceChangedHandler = (enteredPrice) => {
     setMinPrice(enteredPrice);
 
-    onSetEditedService(
-      new ServiceCreate(
-        editedService.name,
-        editedService.description,
-        "RM " + enteredPrice + " - " + "RM " + maxPrice,
-        editedService.category
-      )
-    );
+    if (action === "ADD") {
+      onSetEditedService(
+        new ServiceCreate(
+          editedService.name,
+          editedService.description,
+          "RM " + enteredPrice + " - " + "RM " + maxPrice,
+          editedService.category
+        )
+      );
+    } else if (action === "UPDATE") {
+      onSetUpdatedService(
+        new ServiceCreate(
+          updatedService.name,
+          updatedService.description,
+          "RM " + enteredPrice + " - " + "RM " + maxPrice,
+          updatedService.category
+        )
+      );
+    }
   };
 
   const maxPriceChangedHandler = (enteredPrice) => {
     setMaxPrice(enteredPrice);
 
-    onSetEditedService(
-      new ServiceCreate(
-        editedService.name,
-        editedService.description,
-        "RM " + minPrice + " - " + "RM " + enteredPrice,
-        editedService.category
-      )
-    );
+    if (action === "ADD") {
+      onSetEditedService(
+        new ServiceCreate(
+          editedService.name,
+          editedService.description,
+          "RM " + minPrice + " - " + "RM " + enteredPrice,
+          editedService.category
+        )
+      );
+    } else if (action === "UPDATE") {
+      onSetUpdatedService(
+        new ServiceCreate(
+          updatedService.name,
+          updatedService.description,
+          "RM " + minPrice + " - " + "RM " + enteredPrice,
+          updatedService.category
+        )
+      );
+    }
   };
 
   return (

@@ -3,50 +3,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { GlobalStyles } from "../../constants/Styles";
 
-const ServiceItem = ({
-  id,
-  name,
-  description,
-  price_range,
-  categoryData,
-  active,
-  onNavigateScreen,
-  onGetCategory,
-  onDeleteServiceHandler,
-}) => {
-  const category = onGetCategory(categoryData);
-
-  const navigateScreen = () => {
-    onNavigateScreen("ProviderAddService", {
-      id,
-      name,
-      description,
-      price_range,
-      category: category,
-      action: "UPDATE",
-    });
-  };
-
-  const displayAlert = () => {
-    Alert.alert(
-      "Remove Service",
-      "Do you want to remove service?",
-      [
-        {
-          text: "Cancel",
-          onPress: this._doSomethingSerious,
-        },
-        {
-          text: "Remove",
-          onPress: () => {
-            onDeleteServiceHandler(id, { active: 0 });
-          },
-        },
-      ],
-      { cancelable: false }
-    );
-  };
-
+const BookingItem = ({ categoryData, date, session, address }) => {
   return (
     <View style={styles.container}>
       <View style={styles.rowContainer}>
@@ -55,19 +12,21 @@ const ServiceItem = ({
           source={require("../../../assets/customer-service.png")}
         />
         <View>
-          <Text style={styles.title}>{name}</Text>
-          <Text style={styles.paragraph}>{price_range}</Text>
+          <Text style={styles.paragraph}>{categoryData}</Text>
+          <Text style={styles.paragraph}>{date}</Text>
+          <Text style={styles.paragraph}>{session}</Text>
+          <Text style={styles.title}>{address}</Text>
         </View>
       </View>
 
       <View style={styles.buttonContainer}>
         <Pressable style={styles.button}>
-          <Text style={styles.text} onPress={navigateScreen}>
+          <Text style={styles.text} onPress={() => {}}>
             Edit
           </Text>
         </Pressable>
         <Pressable style={styles.button}>
-          <Text style={styles.text} onPress={displayAlert}>
+          <Text style={styles.text} onPress={() => {}}>
             Remove
           </Text>
         </Pressable>
@@ -76,7 +35,7 @@ const ServiceItem = ({
   );
 };
 
-export default ServiceItem;
+export default BookingItem;
 
 const styles = StyleSheet.create({
   container: {

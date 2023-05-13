@@ -7,7 +7,10 @@ import { GlobalStyles } from "../../constants/Styles";
 const ProviderCategoryScreen = ({ navigation }) => {
   const renderCategoryItem = (itemData) => {
     const navigateScreen = () => {
-      navigation.navigate("ProviderAddService", { category: itemData.item });
+      navigation.navigate("ProviderAddService", {
+        category: itemData.item,
+        action: "ADD",
+      });
     };
 
     return (

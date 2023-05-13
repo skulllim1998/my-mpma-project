@@ -4,7 +4,7 @@ import { SERVICES } from "../data/dummy-data";
 
 export const ServiceContext = createContext({
   services: [],
-  addService: () => {},
+  addService: (serviceData) => {},
   setService: (services) => {},
   updateService: () => {},
   deleteService: () => {},
@@ -14,7 +14,7 @@ const servicesReducer = (state, action) => {
   switch (action.type) {
     case "ADD":
       const id = new Date().toString() + Math.random.toString();
-      return [{ ...action.payload, id: id }, ...state];
+      return [...state, { ...action.payload, id: id }];
     case "SET":
       return action.payload;
     case "UPDATE":

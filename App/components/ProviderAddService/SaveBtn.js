@@ -2,11 +2,11 @@ import { View, Text, StyleSheet, Pressable, Button } from "react-native";
 
 import { GlobalStyles } from "../../constants/Styles";
 
-const SaveBtn = ({ onSaveForm }) => {
+const SaveBtn = ({ onSaveForm, action }) => {
   return (
     <View style={styles.container}>
       <Pressable style={styles.button} onPress={onSaveForm}>
-        <Text style={styles.text}>Save</Text>
+        <Text style={styles.text}>{action}</Text>
       </Pressable>
     </View>
   );

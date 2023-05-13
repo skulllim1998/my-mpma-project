@@ -18,7 +18,7 @@ import WelcomeScreen from "../screens/WelcomeScreen";
 import SignInScreen from "../screens/SignInScreen";
 import RegisterScreen from "../screens/RegisterScreen";
 import { AuthContext } from "../util/auth-context";
-import ServicesContextProvider from "../util/service-context";
+import ProviderUpdateBookingScreen from "../screens/Provider/ProviderUpdateBookingScreen";
 
 const BottomTabs = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -36,13 +36,18 @@ const ProviderScreens = () => {
         component={ProviderServicesScreen}
         options={styles.servicesHeader}
       />
+      <BottomTabs.Screen
+        name="ProviderUpdateBooking"
+        component={ProviderUpdateBookingScreen}
+        options={styles.bookingsHeader}
+      />
     </BottomTabs.Navigator>
   );
 };
 
 const AuthenticatedStack = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator screenOptions={styles.allHeader}>
       <Stack.Screen
         name="ProviderScreens"
         component={ProviderScreens}
@@ -160,5 +165,12 @@ const styles = StyleSheet.create({
   },
   categoryHeader: {
     title: "Your Services",
+  },
+  bookingsHeader: {
+    title: "Bookings",
+    tabBarLabel: "Bookings",
+    tabBarIcon: ({ color, size }) => (
+      <FontAwesome5 name="book" size={26} color={GlobalStyles.colors.white} />
+    ),
   },
 });
