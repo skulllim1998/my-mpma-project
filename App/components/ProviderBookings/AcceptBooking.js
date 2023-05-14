@@ -13,13 +13,7 @@ const AcceptBooking = () => {
 
   return (
     <View style={styles.headerIcon}>
-      <Text style={GlobalStyles.headerTitle}>Your Bookings</Text>
-      <FontAwesome5
-        name="bell"
-        size={GlobalStyles.headerIcons}
-        color={GlobalStyles.colors.white}
-        onPress={navigateScreen}
-      />
+      <Text style={GlobalStyles.headerTitle}>All Bookings</Text>
     </View>
   );
 };

@@ -1,20 +1,45 @@
 import { View, Text, StyleSheet, Pressable, Alert } from "react-native";
-import { useState } from "react";
+import { useState, useEffect, useContext, useCallback } from "react";
 import DialogInput from "react-native-dialog-input";
+import * as SplashScreen from "expo-splash-screen";
 
 import { GlobalStyles } from "../../constants/Styles";
+import { AuthContext } from "../../util/auth-context";
+import { BookingContext } from "../../util/booking-context";
+import { getBookingDetail } from "../../util/bookingHttp";
 
-const BookingItem = ({
-  id,
-  categoryData,
-  date,
-  session,
-  address,
-  onUpdateBookingPrice,
-  onRejectBookingHandler,
-}) => {
+const ProviderBookingDetailScreen = ({ route }) => {
+  const [appIsReady, setAppIsReady] = useState(false);
   const [visible, setVisible] = useState(false);
   const [input, setInput] = useState("");
+  const [bookingDetail, setBookingDetail] = useState({});
+  const booking_id = route.params.booking_id;
+  const authCtx = useContext(AuthContext);
+  const bookingCtx = useContext(BookingContext);
+
+  useEffect(() => {
+    const fetchApi = async () => {
+      await SplashScreen.preventAutoHideAsync();
+      const detail = await getBookingDetail(authCtx.token, {
+        booking_id: booking_id,
+      });
+      setBookingDetail(detail);
+      setAppIsReady(true);
+    };
+    fetchApi();
+  }, []);
+
+  //console.log(bookingDetail.data.date);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
+
+  if (!appIsReady) {
+    return null;
+  }
 
   const displayAlert = () => {
     Alert.alert(
@@ -37,22 +62,40 @@ const BookingItem = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} onLayout={onLayoutRootView}>
       <View>
-        <Text style={styles.paragraphTitle}>Category</Text>
-        <Text style={styles.paragraph}>{categoryData}</Text>
         <View style={styles.rowContainer}>
           <View>
             <Text style={styles.paragraphTitle}>Date</Text>
-            <Text style={styles.paragraph}>{date}</Text>
+            <Text style={styles.paragraph}>{bookingDetail.data.date}</Text>
           </View>
           <View>
             <Text style={styles.paragraphTitle}>Timeslot</Text>
-            <Text style={styles.paragraph}>{session}</Text>
+            <Text style={styles.paragraph}>{bookingDetail.data.session}</Text>
+          </View>
+          <View>
+            <Text style={styles.paragraphTitle}>Price</Text>
+            <Text style={styles.paragraph}>RM {bookingDetail.data.price}</Text>
           </View>
         </View>
         <Text style={styles.paragraphTitle}>Address</Text>
-        <Text style={styles.paragraph}>{address}</Text>
+        <Text style={styles.paragraph}>{bookingDetail.data.address}</Text>
+        <Text style={styles.paragraphTitle}>Status</Text>
+        <Text style={styles.paragraph}>{bookingDetail.data.status}</Text>
+        <Text style={styles.paragraphTitle}>Customer</Text>
+        <Text style={styles.paragraph}>{bookingDetail.data.user_id.email}</Text>
+        <Text style={styles.paragraphTitle}>Customer Phone</Text>
+        <Text style={styles.paragraph}>
+          {bookingDetail.data.user_id.phone_number}
+        </Text>
+        <Text style={styles.paragraphTitle}>Service category</Text>
+        <Text style={styles.paragraph}>
+          {bookingDetail.data.service_id.category}
+        </Text>
+        <Text style={styles.paragraphTitle}>Service description</Text>
+        <Text style={styles.paragraph}>
+          {bookingDetail.data.service_id.description}
+        </Text>
       </View>
 
       <View style={styles.buttonContainer}>
@@ -90,7 +133,7 @@ const BookingItem = ({
   );
 };
 
-export default BookingItem;
+export default ProviderBookingDetailScreen;
 
 const styles = StyleSheet.create({
   container: {

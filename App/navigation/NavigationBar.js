@@ -21,6 +21,7 @@ import { AuthContext } from "../util/auth-context";
 import ProviderUpdateBookingScreen from "../screens/Provider/ProviderUpdateBookingScreen";
 import ProviderBookingsScreen from "../screens/Provider/ProviderBookingsScreen";
 import AcceptBooking from "../components/ProviderBookings/AcceptBooking";
+import ProviderBookingDetailScreen from "../screens/Provider/ProviderBookingDetailScreen";
 
 const BottomTabs = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -67,6 +68,11 @@ const AuthenticatedStack = () => {
           const categoryItem = route.params.category;
           return { title: categoryItem.title };
         }}
+      />
+      <Stack.Screen
+        name="ProviderBookingDetail"
+        component={ProviderBookingDetailScreen}
+        options={styles.bookingDetailHeader}
       />
       <Stack.Screen
         name="ProviderUpdateBooking"
@@ -182,5 +188,8 @@ const styles = StyleSheet.create({
   },
   pendingBookingHeader: {
     title: "Pending Bookings",
+  },
+  bookingDetailHeader: {
+    title: "Booking Detail",
   },
 });

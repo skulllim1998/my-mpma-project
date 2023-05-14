@@ -19,3 +19,8 @@ export const loginProvider = async (providerData) => {
     throw error;
   }
 };
+
+export const readProvider = async (token) => {
+  try {
+  } catch (error) {}
+};

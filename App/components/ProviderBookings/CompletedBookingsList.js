@@ -12,23 +12,23 @@ const CompletedBookingsList = ({ bookingCtx, serviceCtx }) => {
     if (findServiceById !== undefined) {
       const bookingItemProps = {
         id: item.id,
-        categoryData: findServiceById.category,
+        //categoryData: findServiceById.category,
+        price: item.price,
         date: item.date,
-        session: item.session,
-        address: item.address,
-        // onUpdateBookingPrice: updateBookingPriceHandler,
-        // onRejectBookingHandler: rejectBookingHandler,
+        // session: item.session,
+        // address: item.address,
+        status: item.status,
       };
       return <BookingItem {...bookingItemProps} />;
     }
     const bookingItemProps = {
       id: item.id,
-      categoryData: "No category",
+      //categoryData: findServiceById.category,
+      price: item.price,
       date: item.date,
-      session: item.session,
-      address: item.address,
-      //   onUpdateBookingPrice: updateBookingPriceHandler,
-      //   onRejectBookingHandler: rejectBookingHandler,
+      // session: item.session,
+      // address: item.address,
+      status: item.status,
     };
     return <BookingItem {...bookingItemProps} />;
   };

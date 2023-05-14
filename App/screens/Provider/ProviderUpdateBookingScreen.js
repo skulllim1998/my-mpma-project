@@ -12,9 +12,6 @@ const ProviderUpdateBookingScreen = () => {
   const bookingCtx = useContext(BookingContext);
   const authCtx = useContext(AuthContext);
   const serviceCtx = useContext(ServiceContext);
-  const pendingBookings = bookingCtx.bookings.filter(
-    (booking) => booking.status.toLowerCase() === "pending quotation"
-  );
 
   const renderBookingItem = (itemData) => {
     const item = itemData.item;
@@ -54,7 +51,7 @@ const ProviderUpdateBookingScreen = () => {
     if (updatedBookingData.data !== null) {
       bookingCtx.updateBooking(id, {
         price: bookingData.price,
-        status: "pending customer approval",
+        status: bookingData.status,
       });
       Alert.alert("Accept Booking", "Booking price updated successfully.");
     }
@@ -80,7 +77,7 @@ const ProviderUpdateBookingScreen = () => {
       </View>
       <View style={styles.bookingsList}>
         <FlatList
-          data={pendingBookings}
+          data={bookingCtx.bookings}
           keyExtractor={(item) => item.id}
           renderItem={renderBookingItem}
         />

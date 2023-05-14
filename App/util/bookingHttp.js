@@ -4,7 +4,7 @@ const URL = "https://mpma.herokuapp.com/api/";
 
 export const getPendingBookings = async (token) => {
   try {
-    const response = await axios.get(URL + "admin-get-bookings", {
+    const response = await axios.get(URL + "admin-get-pending-quotations", {
       headers: {
         "Content-type": "application/json",
         Authorization: "Bearer " + token,
@@ -127,6 +127,24 @@ export const rejectBooking = async (token, bookingData) => {
     const response = await axios.post(
       URL + "admin-reject-booking",
       bookingData,
+      {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getBookingDetail = async (token, booking_id) => {
+  try {
+    const response = await axios.post(
+      URL + "admin-get-booking-details",
+      booking_id,
       {
         headers: {
           "Content-type": "application/json",
