@@ -21,25 +21,26 @@ const BookingItem = ({ id, price, date, status }) => {
                 <Text style={styles.paragraph}>RM {price}</Text>
               </View>
             )}
+            <View style={styles.buttonContainer}>
+              <Pressable style={styles.button}>
+                <Text
+                  style={styles.text}
+                  onPress={() => {
+                    navigation.navigate("ProviderBookingDetail", {
+                      booking_id: id,
+                      status: status,
+                    });
+                  }}
+                >
+                  View More
+                </Text>
+              </Pressable>
+            </View>
           </View>
           <View>
             <Text style={styles.paragraphTitle}>Status</Text>
             <Text style={styles.paragraph}>{status}</Text>
           </View>
-        </View>
-        <View style={styles.buttonContainer}>
-          <Pressable style={styles.button}>
-            <Text
-              style={styles.text}
-              onPress={() => {
-                navigation.navigate("ProviderBookingDetail", {
-                  booking_id: id,
-                });
-              }}
-            >
-              View More
-            </Text>
-          </Pressable>
         </View>
       </View>
     </View>

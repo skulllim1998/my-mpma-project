@@ -157,3 +157,21 @@ export const getBookingDetail = async (token, booking_id) => {
     throw error;
   }
 };
+
+export const updateCompletedBooking = async (token, bookingData) => {
+  try {
+    const response = await axios.post(
+      URL + "admin-update-completion-status",
+      bookingData,
+      {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

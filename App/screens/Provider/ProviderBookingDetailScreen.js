@@ -7,13 +7,22 @@ import { GlobalStyles } from "../../constants/Styles";
 import { AuthContext } from "../../util/auth-context";
 import { BookingContext } from "../../util/booking-context";
 import { getBookingDetail } from "../../util/bookingHttp";
+import QuotationBtns from "../../components/ProviderBookingDetail/QuotationBtns";
+import CompletionBtns from "../../components/ProviderBookingDetail/CompletionBtns";
+import {
+  updateBookingPrice,
+  rejectBooking,
+  updateCompletedBooking,
+} from "../../util/bookingHttp";
 
-const ProviderBookingDetailScreen = ({ route }) => {
+const ProviderBookingDetailScreen = ({ route, navigation }) => {
   const [appIsReady, setAppIsReady] = useState(false);
   const [visible, setVisible] = useState(false);
   const [input, setInput] = useState("");
   const [bookingDetail, setBookingDetail] = useState({});
+
   const booking_id = route.params.booking_id;
+  const status = route.params.status;
   const authCtx = useContext(AuthContext);
   const bookingCtx = useContext(BookingContext);
 
@@ -28,8 +37,6 @@ const ProviderBookingDetailScreen = ({ route }) => {
     };
     fetchApi();
   }, []);
-
-  //console.log(bookingDetail.data.date);
 
   const onLayoutRootView = useCallback(async () => {
     if (appIsReady) {
@@ -53,12 +60,73 @@ const ProviderBookingDetailScreen = ({ route }) => {
         {
           text: "Reject",
           onPress: () => {
-            onRejectBookingHandler(id, { booking_id: id });
+            rejectBookingHandler(booking_id, { booking_id: booking_id });
           },
         },
       ],
       { cancelable: false }
     );
+  };
+
+  const displayCompletedAlert = () => {
+    Alert.alert(
+      "Complete Booking",
+      "Do you want to set booking to completed?",
+      [
+        {
+          text: "Cancel",
+          onPress: this._doSomethingSerious,
+        },
+        {
+          text: "Completed",
+          onPress: () => {
+            updateCompletedBookingHandler(booking_id, {
+              booking_id: booking_id,
+            });
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+  };
+
+  const updateBookingPriceHandler = async (id, bookingData) => {
+    const updatedBookingData = await updateBookingPrice(
+      authCtx.token,
+      bookingData
+    );
+    if (updatedBookingData.data !== null) {
+      bookingCtx.updateOnGoingBooking(id, {
+        price: bookingData.price,
+        status: updatedBookingData.data.status,
+      });
+      Alert.alert("Accept Booking", "Booking price updated successfully.");
+      navigation.goBack();
+    }
+  };
+
+  const rejectBookingHandler = async (id, bookingData) => {
+    const rejectedBookingData = await rejectBooking(authCtx.token, bookingData);
+    if (rejectedBookingData.data !== null) {
+      bookingCtx.addCompletedBooking(rejectedBookingData.data);
+      bookingCtx.deleteOnGoingBooking(rejectedBookingData.data.id);
+      Alert.alert("Reject Booking", "Booking rejected successfully.");
+      navigation.goBack();
+    }
+  };
+
+  const updateCompletedBookingHandler = async (id, bookingData) => {
+    const updatedBookingData = await updateCompletedBooking(
+      authCtx.token,
+      bookingData
+    );
+    if (updatedBookingData.data !== null) {
+      bookingCtx.updateOnGoingBooking(id, {
+        status: updatedBookingData.data.status,
+      });
+      Alert.alert("Complete Booking", "Booking completed successfully.");
+      navigation.goBack();
+    }
   };
 
   return (
@@ -98,23 +166,18 @@ const ProviderBookingDetailScreen = ({ route }) => {
         </Text>
       </View>
 
-      <View style={styles.buttonContainer}>
-        <Pressable style={styles.button}>
-          <Text
-            style={styles.text}
-            onPress={() => {
-              setVisible(true);
-            }}
-          >
-            Accept
-          </Text>
-        </Pressable>
-        <Pressable style={styles.button}>
-          <Text style={styles.text} onPress={displayAlert}>
-            Reject
-          </Text>
-        </Pressable>
-      </View>
+      {status === "pending quotation" && (
+        <QuotationBtns
+          onDisplayAlert={displayAlert}
+          onSetVisible={setVisible}
+        />
+      )}
+      {status === "pending completion" && (
+        <CompletionBtns
+          onDisplayCompletedAlert={displayCompletedAlert}
+          onDisplayAlert={displayAlert}
+        />
+      )}
 
       <DialogInput
         isDialogVisible={visible}
@@ -125,7 +188,10 @@ const ProviderBookingDetailScreen = ({ route }) => {
         submitInput={(inputText) => {
           setInput(inputText);
           setVisible(false);
-          onUpdateBookingPrice(id, { booking_id: id, price: inputText });
+          updateBookingPriceHandler(booking_id, {
+            booking_id: booking_id,
+            price: inputText,
+          });
         }}
         closeDialog={() => setVisible(false)}
       ></DialogInput>
