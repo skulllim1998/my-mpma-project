@@ -10,7 +10,11 @@ import { AuthContext } from "../../util/auth-context";
 import { serviceItems } from "../../util/serviceHttp";
 import { ServiceContext } from "../../util/service-context";
 import { BookingContext } from "../../util/booking-context";
-import { getPendingBookings } from "../../util/bookingHttp";
+import {
+  getPendingBookings,
+  getOnGoingBookings,
+  getCompletedBookings,
+} from "../../util/bookingHttp";
 
 const ProviderHomeScreen = () => {
   const [appIsReady, setAppIsReady] = useState(false);
@@ -26,6 +30,10 @@ const ProviderHomeScreen = () => {
       serviceCtx.setService(services);
       const pendingBookings = await getPendingBookings(authCtx.token);
       bookingCtx.setBooking(pendingBookings);
+      const onGoingBookings = await getOnGoingBookings(authCtx.token);
+      bookingCtx.setOnGoingBooking(onGoingBookings);
+      const completedBookings = await getCompletedBookings(authCtx.token);
+      bookingCtx.setCompletedBooking(completedBookings);
       setAppIsReady(true);
     };
     fetchApis();

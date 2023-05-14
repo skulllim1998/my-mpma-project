@@ -13,22 +13,20 @@ const OnGoingBookingsList = ({ bookingCtx, serviceCtx }) => {
       const bookingItemProps = {
         id: item.id,
         categoryData: findServiceById.category,
+        price: item.price,
         date: item.date,
         session: item.session,
         address: item.address,
-        // onUpdateBookingPrice: updateBookingPriceHandler,
-        // onRejectBookingHandler: rejectBookingHandler,
       };
       return <BookingItem {...bookingItemProps} />;
     }
     const bookingItemProps = {
       id: item.id,
       categoryData: "No category",
+      price: item.price,
       date: item.date,
       session: item.session,
       address: item.address,
-      //   onUpdateBookingPrice: updateBookingPriceHandler,
-      //   onRejectBookingHandler: rejectBookingHandler,
     };
     return <BookingItem {...bookingItemProps} />;
   };
@@ -36,7 +34,7 @@ const OnGoingBookingsList = ({ bookingCtx, serviceCtx }) => {
   return (
     <View style={styles.container}>
       <FlatList
-        data={bookingCtx.bookings}
+        data={bookingCtx.onGoingBookings}
         keyExtractor={(item) => item.id}
         renderItem={renderBookingItem}
       />

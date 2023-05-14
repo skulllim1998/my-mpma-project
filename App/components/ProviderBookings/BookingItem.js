@@ -1,41 +1,8 @@
-import { View, Text, StyleSheet, Pressable, Alert } from "react-native";
-import { useState } from "react";
-import DialogInput from "react-native-dialog-input";
+import { View, Text, StyleSheet } from "react-native";
 
 import { GlobalStyles } from "../../constants/Styles";
 
-const BookingItem = ({
-  id,
-  categoryData,
-  date,
-  session,
-  address,
-  // onUpdateBookingPrice,
-  // onRejectBookingHandler,
-}) => {
-  const [visible, setVisible] = useState(false);
-  const [input, setInput] = useState("");
-
-  const displayAlert = () => {
-    Alert.alert(
-      "Reject Booking",
-      "Do you want to reject booking?",
-      [
-        {
-          text: "Cancel",
-          onPress: this._doSomethingSerious,
-        },
-        {
-          text: "Reject",
-          onPress: () => {
-            onRejectBookingHandler(id, { booking_id: id });
-          },
-        },
-      ],
-      { cancelable: false }
-    );
-  };
-
+const BookingItem = ({ id, categoryData, price, date, session, address }) => {
   return (
     <View style={styles.container}>
       <View>
@@ -50,37 +17,14 @@ const BookingItem = ({
             <Text style={styles.paragraphTitle}>Timeslot</Text>
             <Text style={styles.paragraph}>{session}</Text>
           </View>
+          <View>
+            <Text style={styles.paragraphTitle}>Price</Text>
+            <Text style={styles.paragraph}>RM {price}</Text>
+          </View>
         </View>
         <Text style={styles.paragraphTitle}>Address</Text>
         <Text style={styles.paragraph}>{address}</Text>
       </View>
-
-      <View style={styles.buttonContainer}>
-        <Pressable style={styles.button}>
-          <Text style={styles.text} onPress={() => {}}>
-            Accept
-          </Text>
-        </Pressable>
-        <Pressable style={styles.button}>
-          <Text style={styles.text} onPress={() => {}}>
-            Reject
-          </Text>
-        </Pressable>
-      </View>
-
-      <DialogInput
-        isDialogVisible={visible}
-        title={"Accept Booking"}
-        message={"Please set a booking price."}
-        hintInput={"Enter price"}
-        textInputProps={{ keyboardType: "numeric" }}
-        submitInput={(inputText) => {
-          setInput(inputText);
-          setVisible(false);
-          onUpdateBookingPrice(id, { booking_id: id, price: inputText });
-        }}
-        closeDialog={() => setVisible(false)}
-      ></DialogInput>
     </View>
   );
 };

@@ -38,7 +38,7 @@ export const getPendingBookings = async (token) => {
 
 export const getOnGoingBookings = async (token) => {
   try {
-    const response = await axios.get(URL + "admin-get-bookings", {
+    const response = await axios.get(URL + "admin-get-active-bookings", {
       headers: {
         "Content-type": "application/json",
         Authorization: "Bearer " + token,
@@ -72,7 +72,7 @@ export const getOnGoingBookings = async (token) => {
 
 export const getCompletedBookings = async (token) => {
   try {
-    const response = await axios.get(URL + "admin-get-bookings", {
+    const response = await axios.get(URL + "admin-get-completed-bookings", {
       headers: {
         "Content-type": "application/json",
         Authorization: "Bearer " + token,
