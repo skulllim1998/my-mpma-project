@@ -6,10 +6,12 @@ export const BookingContext = createContext({
   bookings: [],
   onGoingBookings: [],
   completedBookings: [],
+  paymentCompletedBookings: [],
   addCompletedBooking: () => {},
   setBooking: (services) => {},
   setOnGoingBooking: (services) => {},
   setCompletedBooking: (services) => {},
+  setPaymentCompletedBooking: (services) => {},
   updateBooking: () => {},
   updateOnGoingBooking: () => {},
   updateCompletedBooking: () => {},
@@ -50,6 +52,10 @@ const BookingsContextProvider = ({ children }) => {
     bookingsReducer,
     BOOKINGS
   );
+  const [paymentCompletedBookingsState, paymentCompletedDispatch] = useReducer(
+    bookingsReducer,
+    BOOKINGS
+  );
 
   const addCompletedBooking = (bookingData) => {
     completedDispatch({ type: "ADD", payload: bookingData });
@@ -65,6 +71,10 @@ const BookingsContextProvider = ({ children }) => {
 
   const setCompletedBooking = (bookings) => {
     completedDispatch({ type: "SET", payload: bookings });
+  };
+
+  const setPaymentCompletedBooking = (bookings) => {
+    paymentCompletedDispatch({ type: "SET", payload: bookings });
   };
 
   const updateBooking = (id, bookingData) => {
@@ -90,10 +100,12 @@ const BookingsContextProvider = ({ children }) => {
     bookings: bookingsState,
     onGoingBookings: onGoingBookingsState,
     completedBookings: completedBookingsState,
+    paymentCompletedBookings: paymentCompletedBookingsState,
     addCompletedBooking: addCompletedBooking,
     setBooking: setBooking,
     setOnGoingBooking: setOnGoingBooking,
     setCompletedBooking: setCompletedBooking,
+    setPaymentCompletedBooking: setPaymentCompletedBooking,
     updateBooking: updateBooking,
     updateOnGoingBooking: updateOnGoingBooking,
     updateCompletedBooking: updateCompletedBooking,

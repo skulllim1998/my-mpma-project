@@ -14,6 +14,7 @@ import {
   getPendingBookings,
   getOnGoingBookings,
   getCompletedBookings,
+  getPaymentCompletedBookings,
 } from "../../util/bookingHttp";
 
 const ProviderHomeScreen = () => {
@@ -34,6 +35,10 @@ const ProviderHomeScreen = () => {
       bookingCtx.setOnGoingBooking(onGoingBookings);
       const completedBookings = await getCompletedBookings(authCtx.token);
       bookingCtx.setCompletedBooking(completedBookings);
+      const paymentCompletedBookings = await getPaymentCompletedBookings(
+        authCtx.token
+      );
+      bookingCtx.setPaymentCompletedBooking(paymentCompletedBookings);
       setAppIsReady(true);
     };
     fetchApis();

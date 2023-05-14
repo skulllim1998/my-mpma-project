@@ -22,6 +22,7 @@ import ProviderUpdateBookingScreen from "../screens/Provider/ProviderUpdateBooki
 import ProviderBookingsScreen from "../screens/Provider/ProviderBookingsScreen";
 import AcceptBooking from "../components/ProviderBookings/AcceptBooking";
 import ProviderBookingDetailScreen from "../screens/Provider/ProviderBookingDetailScreen";
+import ProviderEarningScreen from "../screens/Provider/ProviderEarningScreen";
 
 const BottomTabs = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -78,6 +79,11 @@ const AuthenticatedStack = () => {
         name="ProviderUpdateBooking"
         component={ProviderUpdateBookingScreen}
         options={styles.pendingBookingHeader}
+      />
+      <Stack.Screen
+        name="ProviderEarning"
+        component={ProviderEarningScreen}
+        options={styles.earningHeader}
       />
     </Stack.Navigator>
   );
@@ -191,5 +197,8 @@ const styles = StyleSheet.create({
   },
   bookingDetailHeader: {
     title: "Booking Detail",
+  },
+  earningHeader: {
+    title: "Earnings",
   },
 });

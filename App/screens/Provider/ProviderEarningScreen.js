@@ -1,13 +1,12 @@
-import { StyleSheet, View, Text, Pressable } from "react-native";
-import { useNavigation } from "@react-navigation/native";
-import { useState, useEffect, useContext } from "react";
+import { View, Text, StyleSheet, FlatList } from "react-native";
+import { useContext, useState, useEffect } from "react";
 
 import { GlobalStyles } from "../../constants/Styles";
 import { BookingContext } from "../../util/booking-context";
+import EarningItem from "../../components/ProviderEarning/EarningItem";
 
-const HomeEarning = () => {
+const ProviderEarningScreen = () => {
   const bookingCtx = useContext(BookingContext);
-  const navigation = useNavigation();
   const [totalEarning, setTotalEarning] = useState(0);
 
   useEffect(() => {
@@ -22,33 +21,44 @@ const HomeEarning = () => {
     setTotalEarning(total);
   };
 
+  const renderEarningItem = (itemData) => {
+    const item = itemData.item;
+
+    const earningItemProps = {
+      price: item.price,
+      date: item.date,
+      address: item.address,
+    };
+
+    return <EarningItem {...earningItemProps} />;
+  };
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Your total earnings</Text>
-      <Text style={styles.paragraph}>RM {totalEarning}</Text>
-      <View style={styles.buttonContainer}>
-        <Pressable style={styles.button}>
-          <Text
-            style={styles.text}
-            onPress={() => {
-              navigation.navigate("ProviderEarning");
-            }}
-          >
-            View More
-          </Text>
-        </Pressable>
+    <View style={styles.mainContainer}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Your total earnings</Text>
+        <Text style={styles.paragraph}>RM {totalEarning}</Text>
+      </View>
+      <Text style={styles.earningTitle}>Earning History</Text>
+      <View style={styles.flatListContainer}>
+        <FlatList
+          data={bookingCtx.paymentCompletedBookings}
+          keyExtractor={(item) => item.id}
+          renderItem={renderEarningItem}
+        />
       </View>
     </View>
   );
 };
 
-export default HomeEarning;
+export default ProviderEarningScreen;
 
 const styles = StyleSheet.create({
+  mainContainer: { flex: 1 },
   container: {
+    flex: 1,
     marginHorizontal: 30,
-    marginTop: 30,
-    height: 200,
+    marginVertical: 30,
     borderRadius: 15,
     backgroundColor: GlobalStyles.colors.yellow,
     elevation: 16,
@@ -56,6 +66,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 15,
+  },
+  flatListContainer: {
+    flex: 4,
   },
   title: {
     marginHorizontal: 20,
@@ -69,7 +82,7 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flex: 1,
-    margin: 10,
+    margin: 20,
     justifyContent: "center",
     alignItems: "center",
   },
@@ -89,5 +102,11 @@ const styles = StyleSheet.create({
     lineHeight: 21,
     letterSpacing: 0.25,
     color: "white",
+  },
+  earningTitle: {
+    marginHorizontal: 30,
+    marginVertical: 10,
+    fontSize: GlobalStyles.textHeading,
+    fontWeight: "bold",
   },
 });
