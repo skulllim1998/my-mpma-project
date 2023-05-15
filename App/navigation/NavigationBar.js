@@ -23,6 +23,7 @@ import ProviderBookingsScreen from "../screens/Provider/ProviderBookingsScreen";
 import AcceptBooking from "../components/ProviderBookings/AcceptBooking";
 import ProviderBookingDetailScreen from "../screens/Provider/ProviderBookingDetailScreen";
 import ProviderEarningScreen from "../screens/Provider/ProviderEarningScreen";
+import ProviderProfileScreen from "../screens/Provider/ProviderProfileScreen";
 
 const BottomTabs = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -44,6 +45,11 @@ const ProviderScreens = () => {
         name="ProviderBookings"
         component={ProviderBookingsScreen}
         options={styles.bookingsHeader}
+      />
+      <BottomTabs.Screen
+        name="ProviderProfile"
+        component={ProviderProfileScreen}
+        options={styles.profileHeader}
       />
     </BottomTabs.Navigator>
   );
@@ -168,9 +174,8 @@ const styles = StyleSheet.create({
     headerTintColor: GlobalStyles.colors.white,
   },
   homeHeader: {
-    title: "",
+    title: "Home",
     tabBarLabel: "Home",
-    headerTitle: () => <HomeHeaderIcon />,
     tabBarIcon: ({ color, size }) => (
       <MaterialIcons name="home" size={34} color={GlobalStyles.colors.white} />
     ),
@@ -200,5 +205,12 @@ const styles = StyleSheet.create({
   },
   earningHeader: {
     title: "Earnings",
+  },
+  profileHeader: {
+    title: "Profile",
+    tabBarLabel: "Profile",
+    tabBarIcon: ({ color, size }) => (
+      <FontAwesome5 name="user" size={26} color={GlobalStyles.colors.white} />
+    ),
   },
 });

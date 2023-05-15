@@ -20,7 +20,35 @@ export const loginProvider = async (providerData) => {
   }
 };
 
-export const readProvider = async (token) => {
+export const getProfile = async (token) => {
   try {
-  } catch (error) {}
+    const response = await axios.get(URL + "get-profile", {
+      headers: {
+        "Content-type": "application/json",
+        Authorization: "Bearer " + token,
+      },
+    });
+
+    return response.data.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const updateProfile = async (token, providerData) => {
+  try {
+    const response = await axios.post(
+      URL + "update-admin-profile",
+      providerData,
+      {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
+    );
+    return response.data.message;
+  } catch (error) {
+    throw error;
+  }
 };

@@ -16,9 +16,11 @@ import {
   getCompletedBookings,
   getPaymentCompletedBookings,
 } from "../../util/bookingHttp";
+import { getProfile } from "../../util/providerHttp";
 
 const ProviderHomeScreen = () => {
   const [appIsReady, setAppIsReady] = useState(false);
+  const [userProfile, setUserProfile] = useState({});
 
   const authCtx = useContext(AuthContext);
   const serviceCtx = useContext(ServiceContext);
@@ -39,6 +41,8 @@ const ProviderHomeScreen = () => {
         authCtx.token
       );
       bookingCtx.setPaymentCompletedBooking(paymentCompletedBookings);
+      const profile = await getProfile(authCtx.token);
+      setUserProfile(profile);
       setAppIsReady(true);
     };
     fetchApis();
@@ -56,10 +60,9 @@ const ProviderHomeScreen = () => {
 
   return (
     <View style={styles.container} onLayout={onLayoutRootView}>
-      <HomeHeaderTitle />
+      <HomeHeaderTitle email={userProfile.email} />
       <View style={styles.content}>
         <HomeEarning />
-        <HomeBookings />
       </View>
     </View>
   );

@@ -2,11 +2,10 @@ import { Text, View, StyleSheet } from "react-native";
 
 import { GlobalStyles } from "../../constants/Styles";
 
-const HomeHeaderTitle = () => {
+const HomeHeaderTitle = ({ email }) => {
   return (
     <View style={styles.header}>
-      <Text style={styles.headerTitle}>Hello, Seller</Text>
-      <Text style={styles.headerTitle}>Kuala Lumpur, Malaysia</Text>
+      <Text style={styles.headerTitle}>Hello, {email}</Text>
     </View>
   );
 };
@@ -22,5 +21,6 @@ const styles = StyleSheet.create({
   },
   headerTitle: {
     color: GlobalStyles.colors.white,
+    fontSize: GlobalStyles.textHeading,
   },
 });

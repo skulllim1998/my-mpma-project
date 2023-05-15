@@ -1,11 +1,4 @@
-import {
-  View,
-  Text,
-  FlatList,
-  StyleSheet,
-  Alert,
-  ScrollView,
-} from "react-native";
+import { View, Text, FlatList, StyleSheet, Alert } from "react-native";
 import { useState, useContext } from "react";
 
 import SubCategoryItem from "../../components/ProviderAddService/SubCategoryItem";

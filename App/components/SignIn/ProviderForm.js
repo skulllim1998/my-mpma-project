@@ -32,11 +32,11 @@ const ProviderForm = () => {
 
     try {
       const response = await loginProvider(editedProvider);
-      if (response.message === "Email not recognised") {
+
+      if (Object.keys(response)[0] === "message") {
         Alert.alert("Sign In", response.message);
-      } else {
+      } else if (Object.keys(response)[0] === "token") {
         authCtx.authenticate(response.token, "provider");
-        navigation.navigate("ProviderScreens");
       }
     } catch (error) {
       Alert.alert("Sign In Failed", "Something went wrong.");
