@@ -149,3 +149,40 @@ export const newBooking = async (token, bookingData) => {
     throw error;
   }
 };
+
+export const saveProfile = async (token, profileData) => {
+  try {
+    const response = await axios.post(
+      URL + "update-user-profile",
+      profileData,
+      {        
+        headers: {
+          "Content-type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
+      );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const userResetPassword = async (token, data) => {
+  try {
+    const response = await axios.post(
+      URL + "update-password",
+      data,
+      {        
+        headers: {
+          "Content-type": "application/json",
+          Authorization: "Bearer " + token,
+        },
+      }
+      );
+      console.log(response)
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

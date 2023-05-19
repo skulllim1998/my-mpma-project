@@ -130,8 +130,8 @@ function ViewAvailableServicesScreen( {route, navigation} ) {
         <View style={styles.imageView}>
             <GetImage />
         </View>
-        <View>
-          <ScrollView style={styles.scrollView}>
+        <View style={styles.scrollView}>
+          <ScrollView>
             {availableServices.map(newView =>
               <View key={newView.id} style={styles.newBookingPressableView}>
                 <Pressable 
@@ -161,13 +161,11 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
     padding: 4
   },
   imageView: {
     display: "flex",
-    flex: 1,
+    flex: 2,
     padding: 5
   },
   image: {
@@ -221,6 +219,7 @@ const styles = StyleSheet.create({
   },
   scrollView: {
     borderRadius: 10,
-    height: "100%"
+    flex: 4,
+    paddingVertical: 10
   }
 });

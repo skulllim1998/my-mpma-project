@@ -34,6 +34,8 @@ import ViewSubServicesPage from "../components/Customer/CustomerBooking/ViewSubS
 import ViewAvailableServicesPage from "../components/Customer/CustomerBooking/ViewAvailableServices";
 import GetBookingsPage from "../components/Customer/CustomerBooking/GetBookings";
 import ViewBookingPage from "../components/Customer/CustomerBooking/ViewBooking";
+import ResetPasswordPage from "../components/Customer/CustomerPassword/ResetPassword";
+
 
 const BottomTabs = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -164,6 +166,11 @@ const CustomerStack = () => {
         name="ViewBooking"
         component={ViewBookingPage}
         options={{title: "Booking"}}
+      />
+      <Stack.Screen
+        name="ResetPassword"
+        component={ResetPasswordPage}
+        options={{title: "Reset Password"}}
       />
     </Stack.Navigator>
   );

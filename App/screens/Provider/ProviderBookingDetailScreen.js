@@ -121,6 +121,7 @@ const ProviderBookingDetailScreen = ({ route, navigation }) => {
       bookingData
     );
     if (updatedBookingData.data !== null) {
+      console.log(updatedBookingData)
       bookingCtx.updateOnGoingBooking(id, {
         status: updatedBookingData.data.status,
       });
@@ -172,7 +173,7 @@ const ProviderBookingDetailScreen = ({ route, navigation }) => {
           onSetVisible={setVisible}
         />
       )}
-      {status === "pending completion" && (
+      {status === "pending job completion" && (
         <CompletionBtns
           onDisplayCompletedAlert={displayCompletedAlert}
           onDisplayAlert={displayAlert}

@@ -39,7 +39,6 @@ const CustomerForm = () => {
     console.log(newCustomerDetails)
     
     if(inputs.password != confirmPassword) {
-      alert("Password and Confirm Password do not match.")
       Alert.alert("Register Failed", "Password and Confirm Password do not match.");
       return;
     }

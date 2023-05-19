@@ -80,7 +80,11 @@ export default CustomerHomeScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 4
+    paddingVertical: 10,
+    borderWidth: 3,
+    borderColor: "black",
+    borderRadius: 10,
+    marginTop: 5
   },
   newBookingPressableView: {
     width: "100%",
@@ -123,8 +127,6 @@ const styles = StyleSheet.create({
     margin: 10
   },
   scrollView: {
-    borderWidth: 3,
-    borderColor: "black",
     borderRadius: 10,
     height: "100%"
   }

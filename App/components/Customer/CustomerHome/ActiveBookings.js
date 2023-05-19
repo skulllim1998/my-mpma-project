@@ -129,6 +129,7 @@ const styles = StyleSheet.create({
   borderView: {
     borderWidth: 3,
     borderColor: "black",
-    paddingVertical: 10
+    paddingVertical: 10,
+    borderRadius: 10
   }
 });

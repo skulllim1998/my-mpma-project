@@ -16,9 +16,9 @@ function ViewBookingScreen( {route, navigation} ) {
   
   function CheckNotes() {
     if(data.notes == "" || data.notes == null) {
-      return <Text>-</Text>
+      return <Text style={styles.text2}>-</Text>
     }else{
-      return <Text>{data.notes}</Text>
+      return <Text style={styles.text2}>{data.notes}</Text>
     }
   }
 
@@ -125,92 +125,94 @@ function ViewBookingScreen( {route, navigation} ) {
 
   function PriceChecker() {
     if(data.price) {
-        return <Text style={styles.text}>Price : RM {data.price.toFixed(2)}</Text>
+        return <Text style={styles.text2}>Price : RM {data.price.toFixed(2)}</Text>
     }else{
-        return <Text style={styles.text}>Price : RM -</Text>
+        return <Text style={styles.text2}>Price : RM -</Text>
     }
   } 
 
 
   return (
-    <SafeAreaView>
-      <View>
+    <SafeAreaView style={styles.container}>
+    <ScrollView>
+      <View style={styles.detailsContainer}>
           <View style={styles.rowView}>
               <View style={styles.rowView1}>
-                  <Text>Service Category : </Text>
+                  <Text style={styles.text1}>Service Category : </Text>
               </View>
               <View style={styles.rowView2}>
-                  <Text>{data.service_id.category}</Text>
+                  <Text style={styles.text2}>{data.service_id.category}</Text>
               </View>
           </View>
           <View style={styles.rowView}>
               <View style={styles.rowView1}>
-                  <Text>Service Title : </Text>
+                  <Text style={styles.text1}>Service Title : </Text>
               </View>
               <View style={styles.rowView2}>
-                  <Text>{data.service_id.name}</Text>
+                  <Text style={styles.text2}>{data.service_id.name}</Text>
               </View>
           </View>
-      </View>
-      <View style={styles.rowView}>
-          <View style={styles.rowView1}>
-              <Text>Date : </Text>
-          </View>
-          <View style={styles.rowView2}>
-              <Text>{data.date}</Text>
-          </View>
-      </View>
+      
+        <View style={styles.rowView}>
+            <View style={styles.rowView1}>
+                <Text style={styles.text1}>Date : </Text>
+            </View>
+            <View style={styles.rowView2}>
+                <Text style={styles.text2}>{data.date}</Text>
+            </View>
+        </View>
 
-      <View style={styles.rowView}>
-          <View style={styles.rowView1}>
-              <Text>Session {'(AM/PM)'} : </Text>
-          </View>
-          <View style={styles.rowView2}>
-              <Text>{data.session}</Text>
-          </View>
-      </View>
+        <View style={styles.rowView}>
+            <View style={styles.rowView1}>
+                <Text style={styles.text1}>Session {'(AM/PM)'} : </Text>
+            </View>
+            <View style={styles.rowView2}>
+                <Text style={styles.text2}>{data.session}</Text>
+            </View>
+        </View>
 
-      <View style={styles.rowView}>
-          <View style={styles.rowView1}>
-              <Text>Address : </Text>
-          </View>
-          <View style={styles.rowView2}>              
-              <Text>{data.address}</Text>
-          </View>
-      </View>
+        <View style={styles.rowView}>
+            <View style={styles.rowView1}>
+                <Text style={styles.text1}>Address : </Text>
+            </View>
+            <View style={styles.rowView2}>              
+                <Text style={styles.text2}>{data.address}</Text>
+            </View>
+        </View>
 
-      <View style={styles.rowView}>
-          <View style={styles.rowView1}>
-              <Text>Notes : </Text>
-          </View>
-          <View style={styles.rowView2}>
-            <CheckNotes />
-          </View>
-      </View>
+        <View style={styles.rowView}>
+            <View style={styles.rowView1}>
+                <Text style={styles.text1}>Notes : </Text>
+            </View>
+            <View style={styles.rowView2}>
+              <CheckNotes />
+            </View>
+        </View>
 
-      <View style={styles.rowView}>
-          <View style={styles.rowView1}>
-              <Text>Booking Status : </Text>
-          </View>
-          <View style={styles.rowView2}>
-            <Text>{bookingStatus}</Text>
-          </View>
-      </View>
+        <View style={styles.rowView}>
+            <View style={styles.rowView1}>
+                <Text style={styles.text1}>Booking Status : </Text>
+            </View>
+            <View style={styles.rowView2}>
+              <Text style={styles.text2}>{bookingStatus}</Text>
+            </View>
+        </View>
 
-      <View style={styles.rowView}>
-          <View style={styles.rowView1}>
-              <Text>Price : </Text>
-          </View>
-          <View style={styles.rowView2}>
-            <PriceChecker />
-          </View>
+        <View style={styles.rowView}>
+            <View style={styles.rowView1}>
+                <Text style={styles.text1}>Price : </Text>
+            </View>
+            <View style={styles.rowView2}>
+              <PriceChecker />
+            </View>
+        </View>
       </View>
       {showButtons &&
       <View>
         <ButtonType />
       </View>
       }
-             
+  </ScrollView>   
   </SafeAreaView>
   );
 };
@@ -220,7 +222,13 @@ export default ViewBookingScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: GlobalStyles.colors.black,
+  },
+  detailsContainer: {
+    borderWidth: 3,
+    margin: 10,
+    marginTop: 20,
+    borderRadius: 10,
+    backgroundColor: 'chartreuse'
   },
   rowView: {    
     display: "flex",
@@ -234,14 +242,25 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "space-around",
     // borderWidth: 3,
-    borderColor: "red"
+    borderColor: "red",
+    paddingRight :10
   },
   rowView2: {  
     flex: 2,
     flexDirection: "column",
     justifyContent: "space-around",
-    // borderWidth: 3,
-    borderColor: "green"
+    borderWidth: 3,
+    borderColor: "black",
+    borderRadius: 10,
+    paddingVertical: 2,
+    paddingHorizontal: 10,
+    height: 50
+  },
+  text1: {
+    fontSize: 18
+  },
+  text2: {
+    fontSize: 18
   },
   canlendarView: {
     flex: 2,
